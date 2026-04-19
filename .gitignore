@@ -1,0 +1,58 @@
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+.eggs/
+dist/
+build/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local data & trained artifacts (add your own after clone)
+data/*.csv
+!data/.gitkeep
+weights/*.pth
+weights/*.pt
+!weights/.gitkeep
+analysis/models/frozen/*.pth
+analysis/models/frozen/*.pt
+
+# Matplotlib cache (local)
+.mplconfig/
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Environment & secrets
+.env
+.env.*
+
+# Run outputs (optional: comment out if you want to commit predictions)
+predictions*.csv
+hybrid_inference_predictions.png
+*.log
+
+# Generated / local-only analysis (not published): pipeline scripts, outputs, helpers
+analysis/research/
+analysis/results/
+analysis/research_conclusions.txt
+analysis/run_all_analyses.py
+analysis/README.md
+analysis/generate_linkedin_attachment.py
+# Steps 01–09 and 07_08-style names
+analysis/0[1-9]_*.py
+# Steps 10–12
+analysis/1[0-2]_*.py

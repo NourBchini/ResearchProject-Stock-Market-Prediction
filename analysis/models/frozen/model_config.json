@@ -1,0 +1,13 @@
+{
+  "architecture": "CNN-LSTM",
+  "num_features": 5,
+  "hidden_size": 64,
+  "output_size": 5,
+  "cnn_filters": 32,
+  "num_layers": 1,
+  "sequence_length": 60,
+  "dropout_cnn": 0.3,
+  "dropout_lstm": 0.3,
+  "structure": "sequential",
+  "description": "CNN-LSTM with 64 hidden units, sequential structure"
+}
