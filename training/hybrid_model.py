@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """
 Hybrid Model: CNN-LSTM for Open/High/Close, Simple LSTM for Low
 
