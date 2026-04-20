@@ -16,7 +16,7 @@ def main():
     root = Path(__file__).resolve().parent.parent
     out = root / "data" / "SPY.csv"
     out.parent.mkdir(parents=True, exist_ok=True)
-
+    #to fix the slice issue I used `Ticker.history(period="max")`
     # `download()` without an explicit window can return only a short recent slice in some
     # environments; `Ticker.history(period="max")` reliably pulls full daily history.
     ticker = yf.Ticker("SPY")
