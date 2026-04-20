@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """
 Hybrid Inference: Combine Pre-trained Models
 - CNN-LSTM for: Open, High, Close, Volume
