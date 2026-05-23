@@ -1,4 +1,4 @@
-# SPY Price Forecasting — Hybrid CNN–LSTM Research
+# SPY Price Forecasting: Hybrid CNN–LSTM Research
 
 **Deep Learning for Stock Price Prediction**
 A Hybrid CNN–LSTM Approach for SPY Forecasting: Methodology, Evaluation, and Regime Analysis
