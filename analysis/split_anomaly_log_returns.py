@@ -1,14 +1,12 @@
-#!/usr/bin/env python
+
 """
-§6.5 — 80/20 split anomaly: price-level MinMax extrapolation vs log-return targets.
+§6.5 — 80/20 split problem: price-level MinMax extrapolation vs log-return targets.
 
 Reproduces the preliminary split experiment (70/30, 80/20, 90/10) on SPY Close with
 a train-only MinMax scaler (no leakage). Compares:
 
   1. Price-level targets  — scaler extrapolation when test prices exceed train range.
   2. Log-return targets   — stationary targets; dollar MAE via P_{t+1} = P_t * exp(r_hat).
-
-Writes analysis/results/split_anomaly_comparison.csv (cited in README §6.5).
 
 Run from repo root:
   python analysis/split_anomaly_log_returns.py
