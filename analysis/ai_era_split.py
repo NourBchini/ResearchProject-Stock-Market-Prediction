@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """
-Step 9: Split Data Before AI Era vs After AI Era and Test
+Splitting Data Before AI Era vs After AI Era and Test
 Split Date: January 1, 2016 (AI dominance begins)
 """
 
