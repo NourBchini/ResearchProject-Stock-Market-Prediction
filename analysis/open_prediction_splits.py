@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """
-Step 4 (legacy): Open-price prediction with 70/30, 80/20, 90/10 splits.
+Open-price prediction with 70/30, 80/20, 90/10 splits.
 
 Uses a global MinMax fit (preliminary protocol). For §6.5 Close-price results with
 train-only scaling and the log-return fix, run:
