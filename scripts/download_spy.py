@@ -1,5 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """Download SPY daily OHLCV to data/SPY.csv (requires yfinance)."""
 
 from pathlib import Path

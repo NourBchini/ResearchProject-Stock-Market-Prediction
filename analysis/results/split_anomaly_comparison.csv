@@ -1,0 +1,10 @@
+split,target_mode,train_size,test_size,close_mae_usd,train_target_max,test_target_max
+70/30,price,4881,2092,67.3795,156.48,373.88
+70/30,price_global_scaler,4881,2092,107.2943,156.48,373.88
+70/30,log_return,4880,2092,1.63,0.14,0.09
+80/20,price,5578,1395,19.7046,213.5,373.88
+80/20,price_global_scaler,5578,1395,97.1212,213.5,373.88
+80/20,log_return,5577,1395,2.4663,0.14,0.09
+90/10,price,6275,698,46.6739,286.58,373.88
+90/10,price_global_scaler,6275,698,89.2803,286.58,373.88
+90/10,log_return,6274,698,2.6504,0.14,0.09

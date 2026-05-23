@@ -1,184 +1,165 @@
 # SPY Price Forecasting — Hybrid CNN–LSTM Research
 
-**A Hybrid CNN–LSTM Approach for Stock Market Price Prediction Across Market Regimes**  
-Nour Bchini · Skidmore College · Independent Research Project 2024–2025  
-Faculty Supervisor: Professor Wenlu Du
+**Deep Learning for Stock Price Prediction**
+A Hybrid CNN–LSTM Approach for SPY Forecasting: Methodology, Evaluation, and Regime Analysis
+
+Nour Bchini · Skidmore College · Faculty Supervisor: Prof. Wenlu Du
+Undergraduate Independent Research Project · 2024–2026
+
+This repo contains **two generations** of the same project, kept side by side:
+
+| Paper | Code lives in | What it represents |
+| ----- | -------------- | ------------------ |
+| **Preliminary** (2024–2025) | [`experiments/`](experiments/README.md) | Original single-seed results, hybrid model, feature-engineering studies. Headline: parallel CNN–LSTM Close MAE **$1.04**. |
+| **Revised** (2025–2026) | [`analysis/`](analysis/README.md) + [`training/`](training/) | Corrects a test-set peeking bug, adds a persistence baseline, runs 5 seeds, Diebold–Mariano, Wilcoxon, Chow, and a §6.5 log-return fix. Headline: **persistence beats all deep models on the long window**. |
+
+Both pipelines run from the same data (`data/SPY.csv`) and the same env (`requirements.txt`).
 
 ---
 
-## Overview
-
-This repository contains the full research codebase for a deep learning study on next-day SPY (S&P 500 ETF) price forecasting. The project systematically benchmarks standalone LSTM models against two hybrid CNN–LSTM architectures — sequential and parallel — across 28 years of daily market data (1993–2020), with a focus on how model performance changes across different market regimes.
-
-**Key finding:** The parallel CNN–LSTM architecture achieved the strongest overall performance (Close MAE: $1.04), but model accuracy degraded 3.86× in the post-2016 era — a result attributed to the structural transformation of markets by AI-driven and algorithmic trading.
-
----
-
-## Results Summary
-
-| Architecture | Open MAE | High MAE | Low MAE | Close MAE |
-|---|---|---|---|---|
-| Simple LSTM (128 units) | $1.09 | $1.21 | **$1.04** | $1.10 |
-| CNN–LSTM Sequential | $5.79 | $5.66 | $6.46 | $6.04 |
-| **CNN–LSTM Parallel** | **$0.92** | **$1.01** | $1.18 | **$1.04** |
-
-| Era | MAE |
-|---|---|
-| Pre-AI (1993–2015) | $2.31 |
-| Post-AI (2016–2020) | $8.91 |
-
----
-
-## Repository Structure
-
-```
-ResearchProject-Stock-Market-Prediction/
-│
-├── data/                   # Raw and processed SPY OHLCV data
-│
-├── scripts/                # Model definitions and architecture files
-│   ├── lstm_model.py           # Standalone LSTM baseline
-│   ├── new_LSTM_CNN.py         # Parallel CNN–LSTM (CNN and LSTM branches run independently, outputs concatenated)
-│   └── cnn_lstm_model.py       # Sequential CNN→LSTM (CNN output feeds into LSTM)
-│
-├── training/               # Training loops, hyperparameter experiments
-│
-├── weights/                # Saved model weights (.pt files)
-│
-├── requirements.txt        # Python dependencies
-├── .gitignore
-└── README.md
-```
-
----
-
-## Model Architectures
-
-### Simple LSTM (Baseline)
-- Hidden Units: 128 · Layers: 1 · Optimizer: Adam (lr=0.001)
-- Dropout: 0.2 · Sequence Length: 60 days · Batch Size: 32
-- Loss: MSE · Regularization: L2 + Early Stopping (patience=20)
-
-### CNN–LSTM Sequential (`cnn_lstm_model.py`)
-The convolutional layer processes the input sequence first, extracting localized temporal features that are then fed directly into the LSTM. Emphasizes hierarchical feature extraction.
-
-### CNN–LSTM Parallel (`new_LSTM_CNN.py`) ← Best performing
-The same input sequence is fed simultaneously into two independent branches — one convolutional, one recurrent. Their outputs are concatenated and passed into a fully connected prediction layer. This preserves the original temporal information in both branches before fusion.
-
-**Final architecture:**
-- CNN Layer: 32 filters · LSTM Layer: 64 hidden units
-- Dropout: 0.3 (both branches) · Sequence Length: 60 trading days
-- Optimizer: Adam · Learning Rate: 0.0003
-
----
-
-## Getting Started
-
-### Prerequisites
+## Quick Start (works for both pipelines)
 
 ```bash
+git clone https://github.com/NourBchini/ResearchProject-Stock-Market-Prediction.git
+cd ResearchProject-Stock-Market-Prediction
+
+python3 -m venv .venv
+source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
+
+python scripts/download_spy.py     # writes data/SPY.csv
 ```
 
-Key dependencies: `torch`, `numpy`, `pandas`, `scikit-learn`, `matplotlib`, `yfinance`
+After this you can run any script from either pipeline below.
 
-### Data
+---
 
-SPY daily OHLCV data (1993–2020) is included in the `data/` folder. Data was sourced from Yahoo Finance via `yfinance`.
+## Revised Paper — `analysis/`
 
-### Training
+Headline (from [`analysis/results/multi_seed_compare.md`](analysis/results/multi_seed_compare.md)):
+
+| Model | Close MAE — short window (11 days) | Close MAE — long window (1,622 days) |
+| ----- | ---------------------------------- | ------------------------------------ |
+| **Persistence (baseline)** | **$1.20** | **$3.60** |
+| Fusion CNN–LSTM | $2.46 ± 2.62 | $22.11 ± 12.81 |
+| LSTM-128 | $2.30 ± 0.98 | $23.63 ± 7.82 |
+| Cascade CNN–LSTM | $11.13 ± 2.47 | $78.99 ± 20.02 |
+
+5 seeds (`[42, 1337, 2024, 7, 12345]`), validation-based early stopping, no test-set peeking.
+Diebold–Mariano (HLN-corrected) and Wilcoxon both reject equal accuracy with *p* < 0.001.
+
+### How to reproduce each result (revised)
+
+| Paper section | Run | Output file (committed) |
+| ------------- | --- | ------------------------ |
+| §6.2–6.3 + §7.1, Tables 2–4 + Chow | `python analysis/multi_seed_compare.py` | [`analysis/results/multi_seed_compare.json`](analysis/results/multi_seed_compare.json) + [`.md`](analysis/results/multi_seed_compare.md) |
+| §6.5 legacy 80/20 anomaly (**$172.67**) | `python analysis/04_open_prediction_splits.py` | [`analysis/results/open_prediction_splits.csv`](analysis/results/open_prediction_splits.csv) |
+| §6.5 log-return fix (Close, 1993–2020) | `python analysis/05_split_anomaly_log_returns.py` | [`analysis/results/split_anomaly_comparison.csv`](analysis/results/split_anomaly_comparison.csv) |
+| §7.2 Pre-AI vs Post-AI | `python analysis/09_ai_era_split.py` | [`analysis/results/ai_era_split_results.csv`](analysis/results/ai_era_split_results.csv) |
+| §7.2 Table 6 market structure | `python analysis/11_ai_market_analysis.py` | [`analysis/results/ai_market_behavior_analysis.csv`](analysis/results/ai_market_behavior_analysis.csv) |
+| §7.3 Pandemic split | `python analysis/03_pandemic_split.py` | [`analysis/results/pandemic_split_results.csv`](analysis/results/pandemic_split_results.csv) |
+| §7.4 Weekly windows | `python analysis/10_one_week_testing.py` | [`analysis/results/one_week_testing_results.csv`](analysis/results/one_week_testing_results.csv) |
+
+`analysis/01_freeze_model.py` is a shared helper imported by scripts 03 / 04 / 09 / 10.
+`training/lstm_pytorch.py`, `new_LSTM_CNN.py`, and `cnn_lstm_model.py` are the three architectures `multi_seed_compare.py` benchmarks.
+
+---
+
+## Preliminary Paper — `experiments/`
+
+Headline (single-seed, original protocol): parallel CNN–LSTM Close MAE **$1.04**, 70/30 vs 80/20 vs 90/10 split study, hybrid CNN–LSTM + dedicated Low-price LSTM.
+
+### How to reproduce each result (preliminary)
 
 ```bash
-# Train the parallel CNN–LSTM model
-python training/train_parallel.py
-
-# Train the standalone LSTM baseline
-python training/train_lstm.py
-
-# Run the sequential CNN–LSTM
-python training/train_sequential.py
+cd experiments/preliminary_analyses
 ```
 
-### Evaluation
+| Preliminary topic | Run | Output |
+| ----------------- | --- | ------ |
+| Hyperparameter table (Tables 1–2 of preliminary paper) | `python 02_hyperparameter_table.py` | `results/hyperparameter_table.{csv,md}` |
+| Volatility / technical-indicator features | `python 05_volatility_features.py` | `results/volatility_features_results.csv` |
+| Multi-asset features (yfinance pulls) | `python 06_market_wide_features.py` | `results/market_wide_data_summary.json` |
+| AI-trading narrative timeline | `python 07_08_ai_trading_research.py` | `research/ai_trading_history.json` |
+| Aggregate preliminary report | `python 12_final_comparison.py` | `results/final_comparison_{report.txt,summary.json}` |
+| LinkedIn infographic | `python generate_linkedin_attachment.py` | `results/linkedin_research_infographic.png` |
+
+Hybrid model from the preliminary paper:
 
 ```bash
-# Run full regime analysis
-python analysis/regime_analysis.py
+cd experiments/hybrid_model
+python hybrid_model.py         # train both branches
+python hybrid_inference.py     # combine predictions
+```
 
-# Evaluate on a specific date window
-python analysis/evaluate.py --start 2019-10-14 --end 2019-10-28
+Outputs: `predictions_*.csv` and the three figures in `figures/`.
+
+See [`experiments/README.md`](experiments/README.md) for the full file map and why each piece was dropped in the revised paper.
+
+---
+
+## Repository Layout
+
+```
+.
+├── README.md
+├── LICENSE
+├── requirements.txt
+├── .gitignore
+├── data/                       SPY OHLCV (gitignored; regenerate with scripts/download_spy.py)
+├── scripts/
+│   └── download_spy.py         Daily SPY via yfinance
+├── training/                   Architectures used by the revised benchmark
+│   ├── lstm_pytorch.py         LSTM-128 baseline
+│   ├── new_LSTM_CNN.py         Fusion (parallel) CNN–LSTM
+│   └── cnn_lstm_model.py       Cascade (sequential) CNN–LSTM
+├── analysis/                   Revised-paper pipeline + committed results
+│   ├── README.md
+│   ├── multi_seed_compare.py   Tables 2–4 + Chow test
+│   ├── 01_freeze_model.py      Shared CNN–LSTM helper
+│   ├── 03_pandemic_split.py    §7.3
+│   ├── 04_open_prediction_splits.py   §6.5 legacy
+│   ├── 05_split_anomaly_log_returns.py §6.5 log-return fix
+│   ├── 09_ai_era_split.py      §7.2
+│   ├── 10_one_week_testing.py  §7.4
+│   ├── 11_ai_market_analysis.py Table 6
+│   └── results/                CSV / JSON cited by the revised paper
+├── experiments/                Preliminary-paper pipeline (preserved)
+│   ├── README.md
+│   ├── hybrid_model/
+│   └── preliminary_analyses/
+└── weights/                    Trained checkpoints (gitignored)
 ```
 
 ---
 
-## Experiments
+## Reproducibility Notes (revised pipeline)
 
-### Hyperparameter Tuning (LSTM)
-Systematic comparison of 64, 128, and 256 hidden units with cost-benefit and ROI analysis. 128 units selected as optimal (50% MAE improvement over 64 units, 14% ROI; 256 units showed only 4% further gain at 4× the compute cost).
-
-### Optimizer Comparison
-Adam vs AdamW on the 128-unit LSTM. Adam outperformed AdamW — AdamW's extra regularization hindered convergence on this large dataset with dropout already applied.
-
-### Depth Experiment
-1-layer vs 2-layer LSTM. Adding a second layer worsened most metrics (Close MAE: $1.22 → $1.35), likely due to overfitting under current dropout settings.
-
-### Regime Analysis
-| Split | MAE | Notes |
-|---|---|---|
-| Pre-AI era (1993–2015) | $2.31 | Stable, predictable |
-| Post-AI era (2016–2020) | $8.91 | 3.86× degradation |
-| Pre-pandemic | $3.26 | — |
-| Post-pandemic | $3.35 | MAPE improved despite higher absolute error |
-
-### Train/Test Split
-| Split | Train | Test | MAE | Result |
-|---|---|---|---|---|
-| 70/30 | 4,846 | 4,156 | $44.98 | Baseline |
-| 80/20 | 5,539 | 2,770 | $172.67 | Overfit |
-| **90/10** | **6,231** | **1,386** | **$7.55** | **Best** |
-
----
-
-## Key Findings
-
-1. **Parallel > Sequential.** The parallel CNN–LSTM outperforms the sequential variant because each branch specializes independently — CNN captures short-term local patterns, LSTM captures long-range dependencies — before fusion. The sequential model loses temporal resolution by filtering input before LSTM sees it.
-
-2. **Hyperparameter transfer doesn't work across architectures.** Tuning gains from standalone LSTM do not directly carry over to CNN–LSTM hybrids, because the LSTM's input changes fundamentally (from raw prices to CNN feature maps).
-
-3. **The 2016 structural break is real.** Post-2016, MAE rose 3.86×. Market structure metrics confirm the cause: annual returns improved 52.5%, Sharpe ratio rose 51.1%, but volume volatility dropped 55.6% and volatility clustering increased 28.2% — consistent with HFT liquidity flooding masking momentum signals and AI systems eliminating exploitable patterns faster than models can learn them.
-
-4. **Single-week evaluations are misleading.** MAE across six random weekly windows ranged from $1.74 to $10.11 (5.8× spread), underscoring that cherry-picked demo windows can dramatically misrepresent true model behavior.
-
----
-
-## Paper
-
-The full research paper is available here:  
-**[A Hybrid CNN–LSTM Approach for SPY Price Forecasting Across Market Regimes](https://nourbchini.domains.skidmore.edu)**
+- Five seeds share identical hyperparameters and chronological train/val/test boundaries.
+- Train ends **2019-10-14**; validation = last 10% of pre-test sequences; test is never used for early stopping or scaler fitting.
+- `MinMaxScaler` on `[0.01, 0.99]`, fit on training data only.
+- Stochasticity: `numpy` / `torch` seeds per run in `multi_seed_compare.py`.
 
 ---
 
 ## Citation
 
+```bibtex
+@misc{bchini2026spy,
+  author  = {Bchini, Nour},
+  title   = {Deep Learning for Stock Price Prediction: A Hybrid CNN--LSTM Approach for SPY Forecasting},
+  year    = {2026},
+  note    = {Undergraduate Independent Research Project, Skidmore College. Supervisor: Wenlu Du.}
+}
 ```
-Bchini, N. (2025). A Hybrid CNN–LSTM Approach for Stock Market Price Prediction
-Across Market Regimes. Independent Research Project, Skidmore College.
-Supervisor: Professor Wenlu Du.
-```
-
----
 
 ## References
 
-- Mehtab, S., Sen, J., & Dasgupta, S. (2020). Analysis and Forecasting of Financial Time Series Using CNN and LSTM-Based Deep Learning Models. *arXiv:2011.08011*
-- Lu, W., Li, J., Li, Y., Sun, A., & Wang, J. (2020). A CNN–LSTM-based model to forecast stock prices. *Complexity*, 2020, Article 6622927.
-
----
+- Mehtab, S., Sen, J., & Dasgupta, S. (2020). *Analysis and Forecasting of Financial Time Series Using CNN and LSTM-Based Deep Learning Models.* arXiv:2011.08011
+- Lu, W., Li, J., Li, Y., Sun, A., & Wang, J. (2020). *A CNN–LSTM-based model to forecast stock prices.* Complexity, 2020, Article 6622927.
 
 ## License
 
-MIT License — see `LICENSE` for details.
+MIT — see [`LICENSE`](LICENSE).
 
----
-
-*Not investment advice. This is an academic research project.*
+*Not investment advice. Academic research only.*

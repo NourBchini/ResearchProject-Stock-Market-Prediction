@@ -1,0 +1,172 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+"""
+Steps 7-8: Research When Neural Networks Started Booming in Trading
+         & When AI Began Affecting Stock Markets
+
+NOTE: Preserved as part of the preliminary investigation. The revised paper
+relies on the formal Chow test (analysis/multi_seed_compare.py) rather than
+this narrative timeline.
+"""
+
+import json
+from datetime import datetime
+
+print("="*60)
+print("AI & NEURAL NETWORKS IN TRADING - RESEARCH")
+print("="*60)
+
+research = {
+    "neural_networks_in_trading": {
+        "early_adoption": {
+            "period": "1980s-1990s",
+            "description": "Early neural network experiments in financial prediction",
+            "key_events": [
+                "1987: First academic papers on neural networks for stock prediction",
+                "1990s: Backpropagation networks used for pattern recognition",
+                "1995: First commercial neural network trading systems"
+            ]
+        },
+        "growth_period": {
+            "period": "2000s-2010s",
+            "description": "Increased adoption with better computing power",
+            "key_events": [
+                "2000s: Support Vector Machines and ensemble methods gain popularity",
+                "2008: Financial crisis increases demand for better prediction models",
+                "2010s: Deep learning starts being applied to high-frequency trading"
+            ]
+        },
+        "boom_period": {
+            "period": "2015-2020",
+            "description": "Deep learning revolution in quantitative finance",
+            "key_events": [
+                "2015: LSTM networks show promise for time series prediction",
+                "2016: AlphaGo success inspires financial AI applications",
+                "2017-2018: Transformer models and attention mechanisms",
+                "2019: Reinforcement learning for algorithmic trading",
+                "2020: GPT and large language models influence market analysis"
+            ]
+        }
+    },
+    "ai_affecting_markets": {
+        "early_ai_era": {
+            "period": "2010-2015",
+            "description": "AI begins influencing market microstructure",
+            "impact": [
+                "High-frequency trading algorithms become dominant",
+                "Market making algorithms use ML for pricing",
+                "Sentiment analysis from news and social media"
+            ]
+        },
+        "significant_impact": {
+            "period": "2016-2019",
+            "description": "AI becomes integral to market operations",
+            "impact": [
+                "2016: ~60% of US equity trading is algorithmic",
+                "2017: AI-driven hedge funds show superior returns",
+                "2018: Natural language processing for earnings call analysis",
+                "2019: Reinforcement learning for portfolio optimization"
+            ]
+        },
+        "current_era": {
+            "period": "2020-Present",
+            "description": "AI is fundamental to modern markets",
+            "impact": [
+                "2020: ~80% of trading is algorithm-driven",
+                "2021: Large language models analyze market sentiment",
+                "2022: AI predicts market volatility with high accuracy",
+                "2023: Generative AI creates synthetic market scenarios"
+            ]
+        }
+    },
+    "key_milestones": [
+        {
+            "date": "1987",
+            "event": "First neural network paper for stock prediction",
+            "significance": "Academic foundation"
+        },
+        {
+            "date": "2008",
+            "event": "Financial crisis - increased demand for AI models",
+            "significance": "Catalyst for adoption"
+        },
+        {
+            "date": "2015",
+            "event": "LSTM networks gain popularity for time series",
+            "significance": "Deep learning breakthrough"
+        },
+        {
+            "date": "2016",
+            "event": "AlphaGo - AI beats human champions",
+            "significance": "Proof of AI capability"
+        },
+        {
+            "date": "2017",
+            "event": "Transformer architecture introduced",
+            "significance": "Modern AI foundation"
+        },
+        {
+            "date": "2020",
+            "event": "GPT-3 and large language models",
+            "significance": "AI becomes mainstream"
+        }
+    ],
+    "market_behavior_changes": {
+        "pre_ai_era": {
+            "period": "Before 2010",
+            "characteristics": [
+                "Human-driven trading decisions",
+                "Fundamental and technical analysis",
+                "Slower market reactions",
+                "More predictable patterns"
+            ]
+        },
+        "transition_era": {
+            "period": "2010-2015",
+            "characteristics": [
+                "Mixed human-AI trading",
+                "Algorithmic trading increases",
+                "Faster execution",
+                "More complex patterns"
+            ]
+        },
+        "ai_dominant_era": {
+            "period": "2016-Present",
+            "characteristics": [
+                "AI-driven market microstructure",
+                "Machine learning models everywhere",
+                "Ultra-fast reactions",
+                "Non-linear, complex patterns",
+                "AI models competing against each other"
+            ]
+        }
+    },
+    "conclusions": {
+        "neural_network_boom": "2015-2020 marked the boom period for neural networks in trading",
+        "ai_market_impact": "AI began significantly affecting markets around 2016-2017",
+        "split_date_recommendation": "2016-01-01 as the split between pre-AI and AI-dominant eras",
+        "market_complexity": "Post-2016 markets show increased complexity due to AI competition"
+    }
+}
+
+# Save research
+with open('research/ai_trading_history.json', 'w') as f:
+    json.dump(research, f, indent=2)
+
+# Print summary
+print("\nKEY FINDINGS:")
+print("="*60)
+print(f"\n1. Neural Networks Boom: {research['neural_networks_in_trading']['boom_period']['period']}")
+print(f"   {research['neural_networks_in_trading']['boom_period']['description']}")
+
+print(f"\n2. AI Market Impact: {research['ai_affecting_markets']['significant_impact']['period']}")
+print(f"   {research['ai_affecting_markets']['significant_impact']['description']}")
+
+print(f"\n3. Recommended Split Date: {research['conclusions']['split_date_recommendation']}")
+print(f"   Reason: {research['conclusions']['market_complexity']}")
+
+print("\n" + "="*60)
+print("RESEARCH SAVED")
+print("="*60)
+print("Saved to: research/ai_trading_history.json")
+

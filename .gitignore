@@ -1,9 +1,7 @@
-# Virtual environments
+# --- Python / environments
 venv/
 .venv/
 env/
-
-# Python
 __pycache__/
 *.py[cod]
 *$py.class
@@ -14,10 +12,11 @@ __pycache__/
 dist/
 build/
 
-# Jupyter
+# --- Notebook checkpoints
 .ipynb_checkpoints/
 
-# Local data & trained artifacts (add your own after clone)
+# --- Local data & trained artifacts (regenerate with scripts/download_spy.py
+#     and the training scripts). Tracked README placeholders use .gitkeep.
 data/*.csv
 !data/.gitkeep
 weights/*.pth
@@ -25,34 +24,21 @@ weights/*.pt
 !weights/.gitkeep
 analysis/models/frozen/*.pth
 analysis/models/frozen/*.pt
+experiments/preliminary_analyses/data/*.csv
 
-# Matplotlib cache (local)
+# --- Matplotlib cache
 .mplconfig/
 
-# OS / editors
+# --- OS / editor cruft
 .DS_Store
 .idea/
 .vscode/
 *.swp
 *.swo
 
-# Environment & secrets
+# --- Secrets
 .env
 .env.*
 
-# Run outputs (optional: comment out if you want to commit predictions)
-predictions*.csv
-hybrid_inference_predictions.png
+# --- Logs
 *.log
-
-# Generated / local-only analysis (not published): pipeline scripts, outputs, helpers
-analysis/research/
-analysis/results/
-analysis/research_conclusions.txt
-analysis/run_all_analyses.py
-analysis/README.md
-analysis/generate_linkedin_attachment.py
-# Steps 01–09 and 07_08-style names
-analysis/0[1-9]_*.py
-# Steps 10–12
-analysis/1[0-2]_*.py
