@@ -53,14 +53,14 @@ Diebold–Mariano (HLN-corrected) and Wilcoxon both reject equal accuracy with *
 | Paper section | Run | Output file (committed) |
 | ------------- | --- | ------------------------ |
 | §6.2–6.3 + §7.1, Tables 2–4 + Chow | `python analysis/multi_seed_compare.py` | [`analysis/results/multi_seed_compare.json`](analysis/results/multi_seed_compare.json) + [`.md`](analysis/results/multi_seed_compare.md) |
-| §6.5 legacy 80/20 anomaly (**$172.67**) | `python analysis/04_open_prediction_splits.py` | [`analysis/results/open_prediction_splits.csv`](analysis/results/open_prediction_splits.csv) |
-| §6.5 log-return fix (Close, 1993–2020) | `python analysis/05_split_anomaly_log_returns.py` | [`analysis/results/split_anomaly_comparison.csv`](analysis/results/split_anomaly_comparison.csv) |
-| §7.2 Pre-AI vs Post-AI | `python analysis/09_ai_era_split.py` | [`analysis/results/ai_era_split_results.csv`](analysis/results/ai_era_split_results.csv) |
-| §7.2 Table 6 market structure | `python analysis/11_ai_market_analysis.py` | [`analysis/results/ai_market_behavior_analysis.csv`](analysis/results/ai_market_behavior_analysis.csv) |
-| §7.3 Pandemic split | `python analysis/03_pandemic_split.py` | [`analysis/results/pandemic_split_results.csv`](analysis/results/pandemic_split_results.csv) |
-| §7.4 Weekly windows | `python analysis/10_one_week_testing.py` | [`analysis/results/one_week_testing_results.csv`](analysis/results/one_week_testing_results.csv) |
+| §6.5 legacy 80/20 anomaly (**$172.67**) | `python analysis/open_prediction_splits.py` | [`analysis/results/open_prediction_splits.csv`](analysis/results/open_prediction_splits.csv) |
+| §6.5 log-return fix (Close, 1993–2020) | `python analysis/split_anomaly_log_returns.py` | [`analysis/results/split_anomaly_comparison.csv`](analysis/results/split_anomaly_comparison.csv) |
+| §7.2 Pre-AI vs Post-AI | `python analysis/ai_era_split.py` | [`analysis/results/ai_era_split_results.csv`](analysis/results/ai_era_split_results.csv) |
+| §7.2 Table 6 market structure | `python analysis/ai_market_analysis.py` | [`analysis/results/ai_market_behavior_analysis.csv`](analysis/results/ai_market_behavior_analysis.csv) |
+| §7.3 Pandemic split | `python analysis/pandemic_split.py` | [`analysis/results/pandemic_split_results.csv`](analysis/results/pandemic_split_results.csv) |
+| §7.4 Weekly windows | `python analysis/one_week_testing.py` | [`analysis/results/one_week_testing_results.csv`](analysis/results/one_week_testing_results.csv) |
 
-`analysis/01_freeze_model.py` is a shared helper imported by scripts 03 / 04 / 09 / 10.
+`analysis/freeze_model.py` is a shared helper imported by `pandemic_split.py`, `ai_era_split.py`, and `one_week_testing.py`.
 `training/lstm_pytorch.py`, `new_LSTM_CNN.py`, and `cnn_lstm_model.py` are the three architectures `multi_seed_compare.py` benchmarks.
 
 ---
@@ -115,14 +115,14 @@ See [`experiments/README.md`](experiments/README.md) for the full file map and w
 │   └── cnn_lstm_model.py       Cascade (sequential) CNN–LSTM
 ├── analysis/                   Revised-paper pipeline + committed results
 │   ├── README.md
-│   ├── multi_seed_compare.py   Tables 2–4 + Chow test
-│   ├── 01_freeze_model.py      Shared CNN–LSTM helper
-│   ├── 03_pandemic_split.py    §7.3
-│   ├── 04_open_prediction_splits.py   §6.5 legacy
-│   ├── 05_split_anomaly_log_returns.py §6.5 log-return fix
-│   ├── 09_ai_era_split.py      §7.2
-│   ├── 10_one_week_testing.py  §7.4
-│   ├── 11_ai_market_analysis.py Table 6
+│   ├── multi_seed_compare.py        Tables 2–4 + Chow test
+│   ├── freeze_model.py              Shared CNN–LSTM helper
+│   ├── pandemic_split.py            §7.3
+│   ├── open_prediction_splits.py    §6.5 legacy
+│   ├── split_anomaly_log_returns.py §6.5 log-return fix
+│   ├── ai_era_split.py              §7.2
+│   ├── one_week_testing.py          §7.4
+│   ├── ai_market_analysis.py        Table 6
 │   └── results/                CSV / JSON cited by the revised paper
 ├── experiments/                Preliminary-paper pipeline (preserved)
 │   ├── README.md

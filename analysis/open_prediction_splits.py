@@ -5,7 +5,7 @@ Step 4 (legacy): Open-price prediction with 70/30, 80/20, 90/10 splits.
 
 Uses a global MinMax fit (preliminary protocol). For §6.5 Close-price results with
 train-only scaling and the log-return fix, run:
-  python analysis/05_split_anomaly_log_returns.py
+  python analysis/split_anomaly_log_returns.py
 """
 
 import torch

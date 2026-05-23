@@ -17,7 +17,7 @@ warnings.filterwarnings('ignore')
 # Import frozen model
 import sys
 import importlib.util
-spec = importlib.util.spec_from_file_location("freeze_model", "01_freeze_model.py")
+spec = importlib.util.spec_from_file_location("freeze_model", "freeze_model.py")
 freeze_module = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(freeze_module)
 Frozen_CNN_LSTM = freeze_module.Frozen_CNN_LSTM

@@ -11,7 +11,7 @@ a train-only MinMax scaler (no leakage). Compares:
 Writes analysis/results/split_anomaly_comparison.csv (cited in README §6.5).
 
 Run from repo root:
-  python analysis/05_split_anomaly_log_returns.py
+  python analysis/split_anomaly_log_returns.py
 """
 
 from __future__ import annotations
@@ -175,7 +175,7 @@ def run_split(
     scaler_x = MinMaxScaler(feature_range=(0.01, 0.99))
     scaler_y = MinMaxScaler(feature_range=(0.01, 0.99))
     if target_mode == "price_global_scaler":
-        # Preliminary protocol (04_open_prediction_splits.py): scaler fit on full series.
+        # Preliminary protocol (open_prediction_splits.py): scaler fit on full series.
         scaler_x.fit(X.reshape(-1, 1))
         scaler_y.fit(y.reshape(-1, 1))
     else:
