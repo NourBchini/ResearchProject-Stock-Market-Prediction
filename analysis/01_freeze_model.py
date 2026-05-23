@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """
-Step 1: Freeze Current CNN-LSTM Model
+Freezing the current CNN-LSTM Model
 Saves architecture, weights, and code for the final model
 Architecture: CNN-LSTM with 64 hidden units, sequential structure
 """
