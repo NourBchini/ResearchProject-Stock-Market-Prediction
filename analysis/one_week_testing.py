@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """
-Step 10: Test One-Week Testing Periods to See if Performance Improves
+Testing One-Week Testing Periods to See if Performance Improves
 Tests multiple one-week periods throughout the dataset
 """
 
