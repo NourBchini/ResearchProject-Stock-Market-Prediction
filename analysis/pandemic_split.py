@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """
-Step 3: Split Data Pre-Pandemic vs Post-Pandemic and Test Performance
+Splitting Data Pre-Pandemic vs Post-Pandemic and Test Performance
 Pandemic start: March 2020 (COVID-19 market crash)
 """
 
