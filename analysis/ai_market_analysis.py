@@ -1,7 +1,6 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 """
-Step 11: Analyze Effect of AI on Stock Market Behavior
+Analyzing the Effect of AI on Stock Market Behavior
 Compares market characteristics before and after AI dominance
 """
 
