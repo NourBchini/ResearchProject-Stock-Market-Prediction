@@ -1,8 +1,0 @@
-feature_set,description,num_features,mae,rmse
-Baseline (OHLCV),Raw price and volume data only (baseline),5,,
-With RSI,Adds momentum indicator (overbought/oversold signals),6,,
-With MACD,Adds trend and momentum indicators (trend changes),7,,
-With Bollinger,Adds volatility bands (volatility regime indicator),6,,
-With ATR,Adds true range volatility (actual price movement measure),6,,
-With Volatility,Adds returns volatility (statistical dispersion measure),6,,
-All Indicators,Combines all indicators (comprehensive feature set),10,,
