@@ -26,8 +26,7 @@ FEATURES = ["Open", "High", "Low", "Close", "Volume"]
 # for result tables later, making sure it is at culumn 3
 CLOSE_INDEX = FEATURES.index("Close")
 
-# Gu–Kelly–Xiu style signals you can compute from SPY alone.
-# Leave False so Tables 2–4 stay the OHLCV-only paper run.
+
 # Turn True, then retrain from scratch (old weights/*.pth will not match).
 USE_FIRM_SIGNALS = False
 SIGNAL_FEATURES = [
@@ -70,10 +69,6 @@ SCALER_RANGE = (0.01, 0.99)
 
 
 TARGET = "log_return"
-
-
-
-
 
 
 # TRAINING SETTINGS 
