@@ -1,8 +1,3 @@
-# Main experiment in the paper (Section 5): train 3 models x 5 seeds.
-# Early stopping uses the validation set only (not the test set).
-#
-# Run:  python src/train.py
-
 import random
 import sys
 from pathlib import Path
