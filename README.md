@@ -6,7 +6,6 @@ Nour Bchini · Skidmore College
 Faculty Supervisor: Professor Wenlu Du  
 Undergraduate Independent Research Project | 2025–2026
 
-This repository contains the **paper training code only**: SPY daily data, the three networks, and the corrected training loop. It does not include figures, saved weights, or extra experiment scripts.
 
 ## What is in this repo
 
